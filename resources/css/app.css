@@ -1,0 +1,185 @@
+@import "swiper/css/bundle";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+}
+
+.bg-primary {
+    background-color: var(--color-theme-primary);
+}
+.bg-primary-darker {
+    background-color: var(--color-theme-primary-darker);
+}
+.bg-primary-lighter {
+    background-color: var(--color-theme-primary-lighter);
+}
+.bg-primary-dark {
+    background-color: var(--color-theme-primary-dark);
+}
+.bg-primary-light {
+    background-color: var(--color-theme-primary-light);
+}
+
+.peer:checked ~ .peer-checked\:bg-primary-dark {
+    background-color: var(--color-theme-primary-dark);
+}
+
+.hover\:bg-primary:hover {
+    background-color: var(--color-theme-primary);
+}
+.hover\:bg-primary-darker:hover {
+    background-color: var(--color-theme-primary-darker);
+}
+.hover\:bg-primary-lighter:hover {
+    background-color: var(--color-theme-primary-lighter);
+}
+.hover\:bg-primary-dark:hover {
+    background-color: var(--color-theme-primary-dark);
+}
+.hover\:bg-primary-light:hover {
+    background-color: var(--color-theme-primary-light);
+}
+
+.text-primary {
+    color: var(--color-theme-primary);
+}
+.text-primary-darker {
+    color: var(--color-theme-primary-darker);
+}
+.text-primary-lighter {
+    color: var(--color-theme-primary-lighter);
+}
+.text-primary-dark {
+    color: var(--color-theme-primary-dark);
+}
+.text-primary-light {
+    color: var(--color-theme-primary-light);
+}
+
+.fill-primary {
+    fill: var(--color-theme-primary);
+}
+.fill-primary-darker {
+    fill: var(--color-theme-primary-darker);
+}
+.fill-primary-lighter {
+    fill: var(--color-theme-primary-lighter);
+}
+.fill-primary-dark {
+    fill: var(--color-theme-primary-dark);
+}
+.fill-primary-light {
+    fill: var(--color-theme-primary-light);
+}
+
+.hover\:fill-primary:hover {
+    fill: var(--color-theme-primary);
+}
+.hover\:fill-primary-darker:hover {
+    fill: var(--color-theme-primary-darker);
+}
+.hover\:fill-primary-lighter:hover {
+    fill: var(--color-theme-primary-lighter);
+}
+.hover\:fill-primary-dark:hover {
+    fill: var(--color-theme-primary-dark);
+}
+.hover\:fill-primary-light:hover {
+    fill: var(--color-theme-primary-light);
+}
+
+.hover\:text-primary:hover {
+    color: var(--color-theme-primary);
+}
+.hover\:text-primary-darker:hover {
+    color: var(--color-theme-primary-darker);
+}
+.hover\:text-primary-lighter:hover {
+    color: var(--color-theme-primary-lighter);
+}
+.hover\:text-primary-dark:hover {
+    color: var(--color-theme-primary-dark);
+}
+.hover\:text-primary-light:hover {
+    color: var(--color-theme-primary-light);
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.swiper {
+    width: 100%;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.swiper-slide {
+    background-size: cover;
+    background-position: center;
+}
+
+.mySwiper2 {
+    height: 80%;
+    width: 100%;
+}
+
+.mySwiper {
+    height: 20%;
+    box-sizing: border-box;
+    padding: 10px 0;
+}
+
+.mySwiper .swiper-slide {
+    width: 25%;
+    height: 100%;
+    opacity: 0.4;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+    opacity: 1;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.attachment__caption {
+    display: none;
+}
+
+.cart input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.cart input::-webkit-outer-spin-button,
+.cart input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}

@@ -1,0 +1,78 @@
+{
+    "name": "34ml/filament-seo",
+    "description": "SEO package for Filament Admin Panel",
+    "keywords": [
+        "34ML",
+        "laravel",
+        "filament",
+        "seo"
+    ],
+    "homepage": "https://github.com/34ml/filament-seo",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ahmed Essam",
+            "email": "essam@34ml.com",
+            "role": "Backend Team Lead"
+        },
+        {
+            "name": "Reham Mourad",
+            "email": "reham@34ml.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Mostafa Hassan",
+            "email": "mostafa@34ml.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0 | ^8.1",
+        "34ml/laravel-seo": "^1.0",
+        "filament/filament": "^2.12 | ^3.0",
+        "spatie/laravel-package-tools": "^1.14.0"
+    },
+    "require-dev": {
+        "nunomaduro/collision": "^7.9",
+        "orchestra/testbench": "^8.0",
+        "pestphp/pest": "^2.30",
+        "pestphp/pest-plugin-laravel": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "_34ml\\SEO\\": "src/",
+            "_34ml\\SEO\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "_34ml\\SEO\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "_34ml\\SEO\\SEOFieldServiceProvider"
+            ],
+            "aliases": {
+                "SEO": "_34ml\\SEO\\Facades\\SEO"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
