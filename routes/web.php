@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Apply middleware to authenticated routes if necessary
+// Aplicar middleware de autenticação se necessário
 Route::middleware('auth')->group(function () {
     Route::get('/{slug}/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/{slug}/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/product/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 });
 
-// The 'detect.bot' middleware is applied globally to the 'web' group in Kernel.php
+// As rotas dentro do grupo 'web' já possuem o middleware 'detect.bot'
 Route::get('/', [HomeController::class, 'index'])->name('site.home');
 Route::get('/home/{slug}', [HomeController::class, 'index'])->name('custom.home');
 
