@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/product/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 });
 
-// As rotas dentro do grupo 'web' já possuem o middleware 'detect.bot'
+// As rotas dentro do grupo 'web' já possuem o middleware 'web', que anteriormente incluía 'detect.bot'
 Route::get('/', [HomeController::class, 'index'])->name('site.home');
 Route::get('/home/{slug}', [HomeController::class, 'index'])->name('custom.home');
 
