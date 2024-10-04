@@ -7,8 +7,6 @@ use _34ML\SEO\Traits\SeoTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
-use App\Models\SEO;
 
 class Product extends Model
 {
@@ -45,7 +43,6 @@ class Product extends Model
         'videos' => 'array',
         'gifs' => 'array',
         'quantity_discounts' => 'array',
-        'home_page_id' => 'uuid', // Garantir que seja tratado como UUID
     ];
 
     public function categories()
@@ -73,11 +70,4 @@ class Product extends Model
         return $this->belongsTo(Homepage::class, 'home_page_id');
     }
 
-    /**
-     * Define a relação morphOne para SEO.
-     */
-    public function seo(): MorphOne
-    {
-        return $this->morphOne(SEO::class, 'seo_model');
-    }
 }
