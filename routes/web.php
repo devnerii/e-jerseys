@@ -5,7 +5,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Aplicar middleware de autenticação se necessário
 Route::middleware('auth')->group(function () {
     Route::get('/{slug}/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/{slug}/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -31,14 +29,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/address/remove/{id}', [ProfileController::class, 'addressRemove'])->name('profile.address.remove');
 
     Route::post('/product/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
 });
 
-// As rotas dentro do grupo 'web' já possuem o middleware 'web', que anteriormente incluía 'detect.bot'
 Route::get('/', [HomeController::class, 'index'])->name('site.home');
 Route::get('/home/{slug}', [HomeController::class, 'index'])->name('custom.home');
 
 Route::get('/product/{productSlug?}/{slug?}', [ProductController::class, 'index'])->name('site.product');
 
+//Route::get('/products', [ProductController::class, 'all'])->name('site.products');
 Route::get('/products/{slug}', [ProductController::class, 'all'])->name('site.products');
 Route::get('/checkout', [ProductController::class, 'checkout'])->name('checkout');
 Route::post('/checkout', [ProductController::class, 'checkout']);
@@ -61,12 +60,15 @@ Route::get('/page/{slug}', function () {
 })->name('site.page');
 
 Route::get('/home', function () {
+
     $redirect = session()->get('redirect', '');
     if ($redirect !== '') {
         session()->put('redirect', '');
+
         return redirect()->route($redirect);
     }
+
     return redirect()->route('site.home');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
