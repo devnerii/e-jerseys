@@ -4,62 +4,57 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use App\Models\Category;
+use App\Models\HomePage;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use App\Models\HomePage;
 
 class ProductController extends Controller
 {
     public function index($slug)
-    {   
-
-
+    {
         $produto = Product::where('slug', $slug)->first();
 
         if ($produto) {
             $homePage = HomePage::where('id', $produto->home_page_id)->firstOrFail();
         } else {
-            $homePage = HomePage::firstOrFail(); 
+            $homePage = HomePage::firstOrFail();
         }
 
         return view('product', [
             'produto' => $produto,
             'slug' => $slug,
-            'homePage' => $homePage
+            'homePage' => $homePage,
         ]);
     }
 
-    public function all($slug = null, Request $request)
+    public function all($slug, Request $request)
     {
-        if ($slug) {
-            $homePage = HomePage::where('slug', $slug)->firstOrFail();
-        } else {
-            $homePage = HomePage::firstOrFail(); 
-            $slug = $homePage->slug;
-        }
-    
-        $categorySlug = $request->query('category');
+        $homePage = HomePage::firstOrFail();
+
+        $categorySlug = $request->query('category') ?? $slug;
         $sort_by = $request->query('sort_by');
         $search = $request->query('q');
         $category = null;
-    
+
         if ($categorySlug) {
             $category = Category::where('slug', $categorySlug)->first();
         }
-    
+
         $produtosQuery = $homePage->products()
             ->where('is_active', true);
-    
+
+        info($category);
+
         if ($category) {
             $produtosQuery = $produtosQuery->whereHas('categories', function ($query) use ($category) {
                 $query->where('categories.id', $category->id);
             });
         }
-    
+
         if ($search) {
             $categorySearch = Category::where('name', 'like', "%$search%")->pluck('id');
             $produtosQuery = $produtosQuery->where(function ($query) use ($search, $categorySearch) {
@@ -67,31 +62,30 @@ class ProductController extends Controller
                     ->orWhere('description', 'like', "%$search%")
                     ->orWhereIn('id', function ($query) use ($categorySearch) {
                         $query->select('product_id')
-                              ->from('category_product')
-                              ->whereIn('category_id', $categorySearch);
+                            ->from('category_product')
+                            ->whereIn('category_id', $categorySearch);
                     });
             });
         }
-    
+
         if ($sort_by) {
             [$sort_field, $sort_direction] = explode('_', $sort_by);
             $produtosQuery = $produtosQuery->orderBy($sort_field, $sort_direction);
         }
-    
+
         $produtos = $produtosQuery->paginate(16)->withQueryString();
-    
+
         $categorias = Category::where('is_active', 1)->get();
-    
+
         return view('products', [
             'produtos' => $produtos,
             'categorias' => $categorias,
             'categoria' => $category,
             'sort_by' => $sort_by,
             'slug' => $slug,
-            'homePage' => $homePage
+            'homePage' => $homePage,
         ]);
     }
-    
 
     public function cartAdd(Request $request)
     {

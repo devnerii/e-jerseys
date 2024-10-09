@@ -1,5 +1,5 @@
 @extends('index')
-@section('content')
+@section('content-1')
     <h1 class="mb-8 text-xl font-bold text-center">All products</h1>
     <section>
         <form action="{{ route('site.products', ['slug' => $slug]) }}" method="GET" class="flex justify-between gap-2 my-4 text-sm"
@@ -32,7 +32,7 @@
                         $oferta = 'DE ' . round(100 - ($produto->price * 100) / $produto->price_full) . '%';
                     }
                 @endphp
-                <a href="{{ route('site.product', ['productSlug'=>$produto['slug'], 'slug' => $slug ]) }}">
+                <a href="{{ route('site.product', $produto['slug']) }}">
                     <div class="col-span-1 bg-white shadow-lg shadow-slate-100 rounded-xl">
                         <div class="relative overflow-hidden">
                             @if (!empty($produto->images) && count($produto->images) > 0)

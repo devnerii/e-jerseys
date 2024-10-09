@@ -1,15 +1,16 @@
 @extends('index')
-@section('content')
+@section('content-1')
     <form action="{{ route('site.cart.add') }}" method="POST">
         @csrf
         <input hidden name="id" value="{{ $produto->id }}">
         <section class="grid grid-cols-12 gap-8">
             @php
              //   dd($produto);
-                $thumbs = array_reverse($produto->images);
-                $videos = array_reverse($produto->videos);
-                $gifs = array_reverse($produto->gifs);
+                $thumbs = array_reverse($produto->images ?? []);
+                $videos = array_reverse($produto->videos ?? []);
+                $gifs = array_reverse($produto->gifs ?? []);
                 $oferta = '';
+               
                 if ($produto->price_full != 0.0) {
                     $oferta = 'DE ' . round(100 - ($produto->price * 100) / $produto->price_full) . '%';
                 }

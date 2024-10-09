@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Apply middleware to authenticated routes if necessary
 Route::middleware('auth')->group(function () {
     Route::get('/{slug}/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/{slug}/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -29,15 +30,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/address/remove/{id}', [ProfileController::class, 'addressRemove'])->name('profile.address.remove');
 
     Route::post('/product/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-
 });
 
+// The 'detect.bot' middleware is applied globally to the 'web' group in Kernel.php
 Route::get('/', [HomeController::class, 'index'])->name('site.home');
 Route::get('/home/{slug}', [HomeController::class, 'index'])->name('custom.home');
 
-Route::get('/product/{productSlug?}/{slug?}', [ProductController::class, 'index'])->name('site.product');
+Route::get('/product/{slug}', [ProductController::class, 'index'])->name('site.product');
 
-//Route::get('/products', [ProductController::class, 'all'])->name('site.products');
 Route::get('/products/{slug}', [ProductController::class, 'all'])->name('site.products');
 Route::get('/checkout', [ProductController::class, 'checkout'])->name('checkout');
 Route::post('/checkout', [ProductController::class, 'checkout']);
@@ -52,7 +52,7 @@ Route::get('/cart/minus/{id}/{hash}', [ProductController::class, 'cartUpdateMinu
 Route::get('/cart/remove/{id}/{hash}', [ProductController::class, 'cartRemove'])->name('site.cart.remove');
 
 Route::get('/category/{slug}', function (Request $request) {
-    return redirect()->route('site.products', ['category' => $request->slug]);
+    return redirect()->route('site.products', ['slug' => $request->slug, 'category' => $request->category]);
 })->name('site.category');
 
 Route::get('/page/{slug}', function () {
@@ -60,7 +60,6 @@ Route::get('/page/{slug}', function () {
 })->name('site.page');
 
 Route::get('/home', function () {
-
     $redirect = session()->get('redirect', '');
     if ($redirect !== '') {
         session()->put('redirect', '');
